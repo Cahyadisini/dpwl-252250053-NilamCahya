@@ -44,3 +44,4 @@ Pemetaan tersebut dilakukan karena setiap bagian memiliki tugas yang berbeda, ya
 6. kesimpulan P1.
 jawaban:
 Dari materi P1 ini dapat disimpulkan kalau penerapan arsitektur MVC di DPWL sangat membantu merapikan struktur pemrogramannya. Dibandingkan PHP terstruktur yang kodenya sering menyatu di satu file, MVC bikin aplikasi lebih teratur, aman, dan mempermudah kita kalau nanti mau ngembangin aplikasi skala besar secara berkelanjutan atau kerja kelompok
+
