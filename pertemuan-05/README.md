@@ -64,5 +64,72 @@ Implementasi fitur READ data kendaraan menggunakan pola homemade MVC sesuai Modu
 1. Terjadi error karena file `header.php` tidak ditemukan pada path `application/views/admin/header.php`. Pemanggilan template perlu disesuaikan dengan struktur folder `application/views/templates/`.
 2. Ikon panah sorting tabel belum muncul. Bagian pemuatan CSS, JavaScript, dan inisialisasi DataTables perlu diperiksa.
 
+## Tahap D.5 – Implementasi INSERT Data Kendaraan
 
+### 1. Perubahan yang Dilakukan
+
+Pada tahap ini, dikembangkan fitur INSERT untuk menambahkan data kendaraan baru ke dalam sistem pengelolaan mobil berbasis PHP MVC.
+
+Perubahan dilakukan pada berkas berikut:
+
+- `application/models/Mobil_model.php`
+  - Menggunakan method `create()` untuk menyimpan data kendaraan baru ke tabel `t_mobil`.
+  - Menggunakan prepared statement untuk menjalankan query INSERT.
+
+- `application/controllers/Mobil_controller.php`
+  - Menangani proses penambahan data kendaraan.
+  - Mengambil data yang dikirim melalui form.
+  - Melakukan validasi input sebelum data disimpan.
+  - Menangani proses unggah foto kendaraan.
+  - Menampilkan pesan hasil proses dan mengarahkan pengguna kembali ke halaman daftar kendaraan.
+
+- `application/views/admin/mobil_view.php`
+  - Menambahkan form untuk memasukkan data kendaraan.
+  - Menyediakan input nomor plat, nama mobil, jumlah kursi, jumlah bagasi, jenis mobil, transmisi, tahun pembuatan, harga sewa per hari, catatan unit, dan status kendaraan.
+  - Menyediakan input foto depan, foto belakang, dan foto interior.
+  - Menambahkan pratinjau foto yang dipilih.
+  - Mempertahankan tampilan AdminLTE dan tabel daftar kendaraan.
+
+### 2. Validasi Input
+
+Validasi dilakukan untuk memastikan data yang dimasukkan sesuai dengan ketentuan aplikasi, meliputi:
+
+- Nomor plat dan nama mobil.
+- Jumlah kursi dan jumlah bagasi.
+- Jenis mobil dan transmisi.
+- Tahun pembuatan.
+- Harga sewa per hari.
+- Catatan unit dan status kendaraan.
+- Jenis file dan ukuran foto yang diunggah.
+
+Data yang tidak memenuhi ketentuan harus ditolak sebelum proses penyimpanan dilakukan.
+
+### 3. Fitur Unggah Foto
+
+Fitur unggah foto digunakan untuk menyimpan foto depan, belakang, dan interior kendaraan. Sistem memeriksa jenis file serta ukuran foto sebelum file dipindahkan ke folder penyimpanan.
+
+Pratinjau foto ditampilkan agar admin dapat melihat foto yang dipilih sebelum mengirimkan form.
+
+### 4. Alur Proses INSERT
+
+1. Admin membuka halaman tambah kendaraan.
+2. Admin mengisi data kendaraan dan memilih foto.
+3. Controller menerima dan memvalidasi input.
+4. Controller memproses unggah foto.
+5. Model menyimpan data kendaraan ke tabel `t_mobil`.
+6. Aplikasi menampilkan pesan hasil proses dan mengarahkan pengguna ke halaman daftar kendaraan.
+
+### 5. Hasil Pemeriksaan dan Pengujian
+
+**Pemeriksaan kode:**
+- Memeriksa kesesuaian nama input pada view dengan data yang diproses controller.
+- Memeriksa proses validasi input dan unggah foto.
+- Memeriksa method penyimpanan data pada model.
+- Memeriksa kesesuaian query INSERT dengan kolom tabel `t_mobil`.
+
+**Pengujian aplikasi:**
+- Hasil penambahan data kendaraan: [isi sesuai hasil aktual].
+- Hasil validasi input: [isi sesuai hasil aktual].
+- Hasil unggah foto: [isi sesuai hasil aktual].
+- Hasil tampilan pesan proses: [isi sesuai hasil aktual].
 
