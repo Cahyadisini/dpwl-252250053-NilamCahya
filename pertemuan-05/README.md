@@ -64,9 +64,9 @@ Implementasi fitur READ data kendaraan menggunakan pola homemade MVC sesuai Modu
 1. Terjadi error karena file `header.php` tidak ditemukan pada path `application/views/admin/header.php`. Pemanggilan template perlu disesuaikan dengan struktur folder `application/views/templates/`.
 2. Ikon panah sorting tabel belum muncul. Bagian pemuatan CSS, JavaScript, dan inisialisasi DataTables perlu diperiksa.
 
-## Tahap D.5 – Implementasi INSERT Data Kendaraan
+## Tahap D – Implementasi INSERT Data Kendaraan
 
-### 1. Perubahan yang Dilakukan
+# 1. Perubahan yang Dilakukan
 
 Pada tahap ini, dikembangkan fitur INSERT untuk menambahkan data kendaraan baru ke dalam sistem pengelolaan mobil berbasis PHP MVC.
 
@@ -90,7 +90,7 @@ Perubahan dilakukan pada berkas berikut:
   - Menambahkan pratinjau foto yang dipilih.
   - Mempertahankan tampilan AdminLTE dan tabel daftar kendaraan.
 
-### 2. Validasi Input
+# 2. Validasi Input
 
 Validasi dilakukan untuk memastikan data yang dimasukkan sesuai dengan ketentuan aplikasi, meliputi:
 
@@ -104,13 +104,13 @@ Validasi dilakukan untuk memastikan data yang dimasukkan sesuai dengan ketentuan
 
 Data yang tidak memenuhi ketentuan harus ditolak sebelum proses penyimpanan dilakukan.
 
-### 3. Fitur Unggah Foto
+# 3. Fitur Unggah Foto
 
 Fitur unggah foto digunakan untuk menyimpan foto depan, belakang, dan interior kendaraan. Sistem memeriksa jenis file serta ukuran foto sebelum file dipindahkan ke folder penyimpanan.
 
 Pratinjau foto ditampilkan agar admin dapat melihat foto yang dipilih sebelum mengirimkan form.
 
-### 4. Alur Proses INSERT
+# 4. Alur Proses INSERT
 
 1. Admin membuka halaman tambah kendaraan.
 2. Admin mengisi data kendaraan dan memilih foto.
@@ -119,7 +119,7 @@ Pratinjau foto ditampilkan agar admin dapat melihat foto yang dipilih sebelum me
 5. Model menyimpan data kendaraan ke tabel `t_mobil`.
 6. Aplikasi menampilkan pesan hasil proses dan mengarahkan pengguna ke halaman daftar kendaraan.
 
-### 5. Hasil Pemeriksaan dan Pengujian
+# 5. Hasil Pemeriksaan dan Pengujian
 
 **Pemeriksaan kode:**
 - Memeriksa kesesuaian nama input pada view dengan data yang diproses controller.
@@ -132,4 +132,39 @@ Pratinjau foto ditampilkan agar admin dapat melihat foto yang dipilih sebelum me
 - Hasil validasi input: [isi sesuai hasil aktual].
 - Hasil unggah foto: [isi sesuai hasil aktual].
 - Hasil tampilan pesan proses: [isi sesuai hasil aktual].
+
+## Tahap E – Mengimplementasikan UPDATE Data Kendaraan dengan MVC
+
+### 1. Implementasi UPDATE
+
+Pada tahap ini, dikembangkan fitur untuk memperbarui data kendaraan yang sudah tersimpan di dalam database. Admin dapat memilih kendaraan dari halaman daftar, membuka form ubah, memperbarui informasi kendaraan, kemudian menyimpan perubahan.
+
+# 2. Perubahan Berkas
+
+- `application/models/Mobil_model.php`
+  - Menambahkan atau menyesuaikan method `update()` untuk memperbarui data kendaraan pada tabel `t_mobil`.
+  - Memastikan data diperbarui berdasarkan nomor plat kendaraan yang dipilih.
+
+- `application/controllers/Mobil_controller.php`
+  - Menangani permintaan untuk membuka form ubah kendaraan.
+  - Mengambil data kendaraan berdasarkan nomor plat.
+  - Memvalidasi input sebelum menyimpan perubahan.
+  - Menangani unggah foto baru jika foto kendaraan diganti.
+  - Menampilkan pesan hasil proses dan mengarahkan pengguna kembali ke daftar kendaraan.
+
+- `application/views/admin/mobil_view.php`
+  - Menampilkan form ubah dengan data kendaraan sebelumnya.
+  - Memungkinkan admin mengubah informasi kendaraan.
+  - Menampilkan foto yang sudah tersimpan dan menyediakan pilihan untuk menggantinya.
+  - Mempertahankan tampilan AdminLTE dan tabel daftar kendaraan.
+
+# 3. Alur Proses UPDATE
+
+1. Admin memilih kendaraan yang akan diubah.
+2. Sistem mengambil data kendaraan berdasarkan nomor plat.
+3. Form ubah ditampilkan dengan data yang sudah tersimpan.
+4. Admin mengubah data yang diperlukan.
+5. Controller memvalidasi input dan memproses foto baru jika ada.
+6. Model menjalankan proses UPDATE pada database.
+7. Aplikasi menampilkan pesan hasil proses dan mengarahkan pengguna kembali ke daftar kendaraan.
 

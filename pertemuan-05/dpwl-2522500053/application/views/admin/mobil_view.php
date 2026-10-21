@@ -88,17 +88,13 @@ $formAction = $isEdit
 
                     <div class="box-body">
 
-                        <div class="form-group">
-                            <label for="no_plat">Nomor Plat</label>
-                            <input type="text"
-                                class="form-control"
-                                id="no_plat"
-                                name="no_plat"
-                                maxlength="15"
-                                value="<?= htmlspecialchars($mobil_dipilih['no_plat'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                                <?= $isEdit ? 'readonly' : '' ?>
-                                required>
-                        </div>
+                        <div class="form-group"> 
+                            <label for="no_plat">Nomor Plat</label> 
+                            <input type="text" class="form-control" id="no_plat" name="no_plat" 
+                            maxlength="15" value="<?= htmlspecialchars($mobil_dipilih['no_plat'] ?? '', ENT_QUOTES, 'UTF-8') 
+                            ?>" 
+                            <?= $isEdit ? 'readonly' : '' ?> required> 
+                            </div> 
 
                         <div class="form-group">
                             <label for="nm_mobil">Nama Mobil</label>
