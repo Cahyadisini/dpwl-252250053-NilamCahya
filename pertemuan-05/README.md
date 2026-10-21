@@ -168,3 +168,25 @@ Pada tahap ini, dikembangkan fitur untuk memperbarui data kendaraan yang sudah t
 6. Model menjalankan proses UPDATE pada database.
 7. Aplikasi menampilkan pesan hasil proses dan mengarahkan pengguna kembali ke daftar kendaraan.
 
+# Tahap F – Mengimplementasikan DELETE Data Kendaraan dengan MVC 
+### 1. Implementasi DELETE
+
+Pada tahap ini, dikembangkan fitur untuk menghapus data kendaraan yang sudah tersimpan di dalam database. Admin dapat memilih kendaraan pada halaman daftar, menekan tombol Hapus, dan mengonfirmasi tindakan sebelum proses penghapusan dilakukan.
+
+### 2. Perubahan Berkas
+
+- `application/models/Mobil_model.php`
+  - Menambahkan atau menyesuaikan method `delete()` untuk menghapus data kendaraan dari tabel `t_mobil` berdasarkan nomor plat.
+  - Menggunakan prepared statement untuk menjalankan query penghapusan.
+
+- `application/controllers/Mobil_controller.php`
+  - Menangani permintaan penghapusan kendaraan.
+  - Memastikan pengguna memiliki hak akses admin.
+  - Menangani pesan hasil penghapusan dan mengarahkan pengguna kembali ke halaman daftar kendaraan.
+
+
+- `application/views/admin/mobil_view.php`
+  - Menyediakan tombol Hapus pada setiap baris data kendaraan.
+  - Menampilkan konfirmasi sebelum permintaan penghapusan dikirim.
+  - Mempertahankan tampilan daftar kendaraan dan fitur lainnya.
+
