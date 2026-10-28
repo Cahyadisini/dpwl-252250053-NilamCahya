@@ -65,3 +65,15 @@ Tahap F – Profil dan Pembaruan Data Penyewa
 - Hasil pengujian: Pengujian Tahap F mencakup akses halaman profil penyewa, penampilan informasi akun, pengiriman formulir pembaruan data, serta pemeriksaan perubahan data setelah proses pembaruan dilakukan. Pengujian ini bertujuan memastikan informasi profil dapat ditampilkan dan diperbarui sesuai implementasi aplikasi.
 - Kesimpulan: Tahap F berfokus pada pengelolaan profil penyewa dan pembaruan informasi akun. Integrasi controller, model, route, view, dan sesi login diperlukan agar penyewa dapat melihat serta memperbarui data profil melalui aplikasi.
 
+Tahap G — Menghilangkan Penulisan `index.php` pada URL Aplikasi
+
+- Hasil Pengujian
+Pada tahap G dilakukan perubahan konfigurasi aplikasi untuk menghilangkan penulisan `index.php` pada URL. Perubahan dilakukan pada file `index.php`, `application/config/config.php`, `application/helpers/url_helper.php`, dan `application/config/routes.php`. Selain itu, ditambahkan file `.htaccess` untuk mengatur URL rewrite.
+
+Pengujian dilakukan dengan menjalankan aplikasi melalui Laragon. Saat mengakses halaman katalog menggunakan URL tanpa `index.php`, halaman masih menampilkan **404 Not Found**.
+
+- Perbaikan Galat
+Penyesuaian dilakukan dengan memastikan `base_url` dan `RewriteBase` menggunakan nama folder proyek `dpwl-2522500053`, serta memastikan route katalog mengarah ke `Katalog_controller/index` sesuai modul.
+
+- Kesimpulan
+Tahap G telah diterapkan sesuai langkah-langkah pada modul. Namun, halaman katalog masih menampilkan 404 Not Found sehingga perlu dilakukan pengujian dan pemeriksaan lebih lanjut.
