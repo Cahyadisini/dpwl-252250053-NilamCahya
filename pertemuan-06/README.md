@@ -27,3 +27,16 @@ Tahap C – Detail Kendaraan Berbasis MVC
 - View: Berkas detail.php telah dibuat pada folder application/views/katalog/ untuk menampilkan informasi detail kendaraan.
 
 URL pengujian: Halaman detail kendaraan diakses melalui tombol Lihat Kendaraan pada halaman katalog.
+
+
+Tahap D – Registrasi Penyewa
+
+- Controller: Method `register()` telah ditambahkan pada berkas `Auth.php` untuk menangani proses registrasi penyewa. Method ini memproses permintaan yang diterima dari halaman registrasi dan mengatur alur pendaftaran berdasarkan metode HTTP yang digunakan.
+- Model: Berkas `Penyewa_model.php` digunakan untuk menangani pengolahan data penyewa yang berkaitan dengan proses registrasi, termasuk penyimpanan data penyewa baru ke database.
+- View: Halaman registrasi penyewa telah disiapkan pada folder `application/views/auth/` untuk menampilkan formulir pendaftaran. Formulir digunakan oleh calon penyewa untuk memasukkan informasi yang diperlukan saat membuat akun baru.
+- Formulir Registrasi: Formulir registrasi menyediakan kolom input untuk data penyewa sesuai kebutuhan aplikasi. Pengguna mengisi data yang diminta sebelum mengirimkan formulir untuk diproses oleh controller.
+- Validasi Data: Proses registrasi dilengkapi dengan pemeriksaan data input untuk memastikan data yang dikirim memenuhi ketentuan yang diterapkan pada aplikasi. Validasi dilakukan sebelum data diproses lebih lanjut agar input yang tidak sesuai dapat ditangani.
+- Proses Registrasi: Setelah formulir dikirimkan, data diterima oleh method `register()` pada `Auth.php`. Data tersebut kemudian diproses sesuai alur registrasi dan diteruskan ke model untuk disimpan ke database apabila memenuhi ketentuan yang berlaku.
+- URL pengujian:`http://localhost/dpwl-2522500053/index.php/auth/register`
+- Hasil pengujian: Halaman registrasi penyewa dapat diakses melalui URL pengujian. Formulir registrasi ditampilkan untuk memungkinkan pengguna memasukkan data penyewa baru. Proses registrasi ditangani oleh controller dan menggunakan model untuk mengelola data penyewa. Validasi input diterapkan sebelum data diproses lebih lanjut sesuai dengan ketentuan pada aplikasi.
+- Kesimpulan:Tahap D berfokus pada implementasi fitur registrasi penyewa dengan mengintegrasikan controller, model, dan view. Integrasi tersebut bertujuan agar pengguna dapat melakukan pendaftaran akun melalui formulir yang tersedia. Pengujian dilakukan untuk memeriksa halaman registrasi dan alur pemrosesan data sesuai implementasi aplikasi.
