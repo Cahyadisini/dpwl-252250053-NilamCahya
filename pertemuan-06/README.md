@@ -18,3 +18,12 @@ Tahap B:  Mengimplementasikan Katalog Kendaraan Berbasis MVC
 - View: Berkas `header.php`, `navbar.php`, `footer.php`, dan `index.php` telah disiapkan pada folder `application/views/katalog/`.
 - URL pengujian: `http://localhost/dpwl-2522500053/index.php/katalog`
 - Hasil pengujian: Halaman katalog kendaraan berhasil diakses melalui URL pengujian. Data kendaraan beserta informasi nama, jenis, tahun, dan transmisi tampil pada halaman katalog. Tombol **Lihat Kendaraan** juga ditampilkan pada kartu kendaraan. Namun, beberapa foto kendaraan belum tersedia sehingga halaman menampilkan pesan *“Foto kendaraan belum tersedia”*.
+
+Tahap C – Detail Kendaraan Berbasis MVC
+
+- Route: Route katalog/detail/(:any) telah ditambahkan pada routes.php untuk mengakses halaman detail kendaraan berdasarkan nomor plat.
+- Controller: Method detail() telah ditambahkan pada Katalog_controller.php untuk mengambil data kendaraan berdasarkan nomor plat dan menampilkan halaman detail.
+- Model: Method findByNoPlat() digunakan untuk mencari data kendaraan berdasarkan nomor plat.
+- View: Berkas detail.php telah dibuat pada folder application/views/katalog/ untuk menampilkan informasi detail kendaraan.
+
+URL pengujian: Halaman detail kendaraan diakses melalui tombol Lihat Kendaraan pada halaman katalog.
