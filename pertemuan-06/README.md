@@ -9,3 +9,12 @@ assets/zay/css/
 assets/zay/img/
 assets/zay/js/
 assets/zay/webfonts/
+
+Tahap B:  Mengimplementasikan Katalog Kendaraan Berbasis MVC
+
+- Model: Method `getKatalog()` telah ditambahkan pada `Mobil_model.php`.
+- Controller: Berkas `Katalog_controller.php` telah dibuat.
+- Route: Route `katalog` telah ditambahkan pada `routes.php`.
+- View: Berkas `header.php`, `navbar.php`, `footer.php`, dan `index.php` telah disiapkan pada folder `application/views/katalog/`.
+- URL pengujian: `http://localhost/dpwl-2522500053/index.php/katalog`
+- Hasil pengujian: Halaman katalog kendaraan berhasil diakses melalui URL pengujian. Data kendaraan beserta informasi nama, jenis, tahun, dan transmisi tampil pada halaman katalog. Tombol **Lihat Kendaraan** juga ditampilkan pada kartu kendaraan. Namun, beberapa foto kendaraan belum tersedia sehingga halaman menampilkan pesan *“Foto kendaraan belum tersedia”*.
