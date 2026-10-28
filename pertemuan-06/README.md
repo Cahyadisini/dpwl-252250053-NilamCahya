@@ -40,3 +40,16 @@ Tahap D – Registrasi Penyewa
 - URL pengujian:`http://localhost/dpwl-2522500053/index.php/auth/register`
 - Hasil pengujian: Halaman registrasi penyewa dapat diakses melalui URL pengujian. Formulir registrasi ditampilkan untuk memungkinkan pengguna memasukkan data penyewa baru. Proses registrasi ditangani oleh controller dan menggunakan model untuk mengelola data penyewa. Validasi input diterapkan sebelum data diproses lebih lanjut sesuai dengan ketentuan pada aplikasi.
 - Kesimpulan:Tahap D berfokus pada implementasi fitur registrasi penyewa dengan mengintegrasikan controller, model, dan view. Integrasi tersebut bertujuan agar pengguna dapat melakukan pendaftaran akun melalui formulir yang tersedia. Pengujian dilakukan untuk memeriksa halaman registrasi dan alur pemrosesan data sesuai implementasi aplikasi.
+
+Tahap E – Login, Sesi, dan Logout Penyewa
+
+- Controller: Method `loginPenyewa()` dan `logoutPenyewa()` telah ditambahkan pada berkas `Auth.php` untuk menangani proses login dan logout penyewa.
+- Model: Berkas `Penyewa_model.php` digunakan untuk mengambil data penyewa berdasarkan username yang dimasukkan saat login dan memeriksa data akun yang tersimpan di database.
+- Route: Route `auth/login-penyewa` dan `auth/logout-penyewa` telah ditambahkan pada `routes.php` untuk mengakses proses login dan logout penyewa.
+- View: Halaman login penyewa disiapkan pada folder `application/views/auth/` untuk menampilkan formulir login yang berisi kolom username dan password.
+- Proses Login: Pengguna memasukkan username dan password pada formulir login. Data tersebut dikirimkan ke controller untuk diperiksa. Sistem memvalidasi input dan mencocokkan kredensial dengan data penyewa yang tersimpan di database sebelum memberikan akses kepada pengguna.
+- Pengelolaan Sesi: Setelah login berhasil, aplikasi membuat sesi penyewa untuk menyimpan informasi akun yang sedang masuk. Sesi digunakan untuk mengenali pengguna selama mengakses halaman yang memerlukan autentikasi.
+- Proses Logout: Method `logoutPenyewa()` digunakan untuk mengakhiri sesi penyewa yang sedang aktif sehingga pengguna keluar dari akun dan tidak lagi menggunakan sesi login tersebut.
+- Validasi Login: Sistem menangani input login yang tidak sesuai, seperti username atau password yang salah, serta input yang tidak memenuhi ketentuan validasi. Pesan kesalahan ditampilkan agar pengguna mengetahui bahwa proses login belum berhasil.
+- Pembatasan Akses: Halaman atau fitur yang memerlukan autentikasi diperiksa berdasarkan status sesi penyewa. Pengguna yang belum login tidak seharusnya dapat mengakses fitur yang dibatasi untuk penyewa yang telah terautentikasi.
+- Hasil pengujian: Pengujian Tahap E mencakup akses halaman login, proses login dengan akun penyewa, penanganan login yang gagal, pengelolaan sesi setelah login berhasil, proses logout, serta pembatasan akses halaman yang memerlukan autentikasi. Pengujian ini bertujuan memastikan proses autentikasi penyewa berjalan sesuai implementasi aplikasi.
