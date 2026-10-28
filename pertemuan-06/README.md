@@ -53,3 +53,15 @@ Tahap E – Login, Sesi, dan Logout Penyewa
 - Validasi Login: Sistem menangani input login yang tidak sesuai, seperti username atau password yang salah, serta input yang tidak memenuhi ketentuan validasi. Pesan kesalahan ditampilkan agar pengguna mengetahui bahwa proses login belum berhasil.
 - Pembatasan Akses: Halaman atau fitur yang memerlukan autentikasi diperiksa berdasarkan status sesi penyewa. Pengguna yang belum login tidak seharusnya dapat mengakses fitur yang dibatasi untuk penyewa yang telah terautentikasi.
 - Hasil pengujian: Pengujian Tahap E mencakup akses halaman login, proses login dengan akun penyewa, penanganan login yang gagal, pengelolaan sesi setelah login berhasil, proses logout, serta pembatasan akses halaman yang memerlukan autentikasi. Pengujian ini bertujuan memastikan proses autentikasi penyewa berjalan sesuai implementasi aplikasi.
+
+Tahap F – Profil dan Pembaruan Data Penyewa
+
+- Controller: Method `profil()` dan method untuk memperbarui data penyewa telah diintegrasikan pada controller penyewa untuk menangani tampilan profil dan proses pembaruan informasi akun.
+- Model:  Berkas `Penyewa_model.php` digunakan untuk mengambil data profil penyewa berdasarkan akun yang sedang login serta memproses perubahan data penyewa ke database.
+- Route: Route untuk mengakses halaman profil dan memproses pembaruan data penyewa telah disiapkan pada `routes.php` sesuai implementasi aplikasi.
+- View: Halaman profil penyewa disiapkan pada folder `application/views/` untuk menampilkan informasi akun penyewa yang sedang login dan menyediakan formulir untuk memperbarui data.
+- Menampilkan Profil: Halaman profil digunakan untuk menampilkan informasi penyewa berdasarkan sesi login. Data yang ditampilkan berasal dari database sehingga informasi profil sesuai dengan akun penyewa yang sedang aktif.
+- Pembaruan Data: Penyewa dapat mengubah informasi yang disediakan pada formulir profil. Data yang dikirimkan diproses oleh controller dan diteruskan ke model untuk diperbarui pada database setelah melewati validasi yang diterapkan.
+- Hasil pengujian: Pengujian Tahap F mencakup akses halaman profil penyewa, penampilan informasi akun, pengiriman formulir pembaruan data, serta pemeriksaan perubahan data setelah proses pembaruan dilakukan. Pengujian ini bertujuan memastikan informasi profil dapat ditampilkan dan diperbarui sesuai implementasi aplikasi.
+- Kesimpulan: Tahap F berfokus pada pengelolaan profil penyewa dan pembaruan informasi akun. Integrasi controller, model, route, view, dan sesi login diperlukan agar penyewa dapat melihat serta memperbarui data profil melalui aplikasi.
+
