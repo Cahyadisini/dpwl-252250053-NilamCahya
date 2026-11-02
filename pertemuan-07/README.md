@@ -107,4 +107,9 @@ Halaman juga menyediakan fitur memperbarui periode sewa, menghapus kendaraan, da
 
 Menambahkan method untuk menampilkan keranjang, memperbarui periode sewa, menghapus kendaraan, dan memproses checkout.
 
+## Tahap F.3 — Membuat Halaman Konfirmasi dan Menguji Checkout
+
+### Perubahan
+Membuat file `application/views/transaksi/konfirmasi.php`.
+Halaman ini menampilkan ringkasan transaksi, total sewa, DP sebesar 30%, dan sisa pembayaran sebelum transaksi diajukan kepada admin.
 
