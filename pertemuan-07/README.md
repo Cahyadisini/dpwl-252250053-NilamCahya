@@ -30,3 +30,19 @@ Controller berfungsi menerima permintaan penambahan kendaraan ke keranjang, meme
 
 ### Pengujian
 - File Controller berhasil dibuat: [Ya ]
+
+## Tahap B.3 — Menambahkan Route Transaksi
+
+### Perubahan
+Memperbarui `application/config/routes.php` dengan menambahkan route `transaksi/tambah`.
+Route tersebut menghubungkan URL transaksi/tambah dengan method tambah() pada Transaksi_controller.
+
+### Pengujian
+- Route berhasil ditambahkan: [Ya ]
+
+## Tahap C.1 — Integrasi Tombol pada Detail Kendaraan
+
+### Perubahan
+Mengubah bagian formulir Add To Cart pada `application/views/katalog/detail.php`.
+Tombol disesuaikan berdasarkan status kendaraan dan status login penyewa.
+
