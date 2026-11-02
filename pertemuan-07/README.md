@@ -20,3 +20,13 @@ Controller berfungsi menerima permintaan penambahan kendaraan ke keranjang, meme
 
 ### Pengujian
 - File Controller berhasil dibuat: [Ya ]
+
+## Tahap B.2 — Membuat Controller Transaksi
+
+### Perubahan
+Membuat file `application/controllers/Transaksi_controller.php`.
+
+Controller berfungsi menerima permintaan penambahan kendaraan ke keranjang, memeriksa login penyewa, memvalidasi metode POST, dan menampilkan pesan hasil proses.
+
+### Pengujian
+- File Controller berhasil dibuat: [Ya ]
