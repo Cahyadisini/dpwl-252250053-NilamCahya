@@ -82,7 +82,7 @@ Menambahkan method untuk menghitung jumlah kendaraan dalam keranjang dan mengiri
 6. Menambahkan data `jumlahKeranjang` ketika validasi formulir gagal.
 7. Memperbarui method `renderProfilError()` agar jumlah keranjang tetap dikirim ke halaman profil ketika terjadi kesalahan.
 
-## Tahap E.1 — Mengintegrasikan Proses Tambah ke Keranjang
+## Tahap E — Mengintegrasikan Proses Tambah ke Keranjang
 
 ### Perubahan
 Memperbarui `application/models/Transaksi_model.php` dengan menambahkan helper pengelolaan keranjang, validasi kendaraan, perhitungan durasi sewa, dan method tambahKeKeranjang().
@@ -90,4 +90,11 @@ Memperbarui `application/models/Transaksi_model.php` dengan menambahkan helper p
 Proses penyimpanan transaksi menggunakan pola Header-Detail:
 - Tabel `t_sewa` menyimpan informasi utama transaksi.
 - Tabel `t_pilih` menyimpan kendaraan yang dipilih.
+
+## Tahap F.1 — Membuat Halaman Isi Keranjang
+### Perubahan
+Membuat file `application/views/transaksi/keranjang.php`.
+
+Halaman keranjang digunakan untuk menampilkan informasi transaksi, periode sewa, waktu pengambilan, daftar kendaraan, harga sewa, durasi, dan total biaya.
+Halaman juga menyediakan fitur memperbarui periode sewa, menghapus kendaraan, dan melanjutkan checkout.
 
