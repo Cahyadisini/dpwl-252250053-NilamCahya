@@ -65,3 +65,19 @@ Perubahan meliputi penambahan notifikasi transaksi, tautan menuju halaman keranj
 2. `application/controllers/Katalog_controller.php`
 
 Menambahkan method untuk menghitung jumlah kendaraan dalam keranjang dan mengirimkan hasilnya ke halaman katalog serta detail kendaraan melalui data `jumlahKeranjang`.
+
+
+## Tahap D.3
+
+- `application/controllers/Penyewa_controller.php`
+
+
+**Perubahan yang dilakukan:**
+
+1. Menambahkan pemanggilan `Transaksi_model.php` pada bagian atas `Penyewa_controller.php`.
+2. Menambahkan properti `$transaksiModel` di dalam class `Penyewa_controller`.
+3. Menginisialisasi `Transaksi_model` pada method `__construct()`.
+4. Menambahkan perhitungan `$jumlahKeranjang` pada halaman profil penyewa.
+5. Mengirimkan data `jumlahKeranjang` ke View `penyewa/profil` ketika halaman profil dibuka.
+6. Menambahkan data `jumlahKeranjang` ketika validasi formulir gagal.
+7. Memperbarui method `renderProfilError()` agar jumlah keranjang tetap dikirim ke halaman profil ketika terjadi kesalahan.
