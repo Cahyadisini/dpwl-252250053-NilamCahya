@@ -98,3 +98,13 @@ Membuat file `application/views/transaksi/keranjang.php`.
 Halaman keranjang digunakan untuk menampilkan informasi transaksi, periode sewa, waktu pengambilan, daftar kendaraan, harga sewa, durasi, dan total biaya.
 Halaman juga menyediakan fitur memperbarui periode sewa, menghapus kendaraan, dan melanjutkan checkout.
 
+## Tahap F.2 — Menambahkan Method Keranjang pada Controller
+
+### Perubahan File
+1. `application/controllers/Transaksi_controller.php`
+2. `application/models/Transaksi_model.php`
+3. `application/config/routes.php`
+
+Menambahkan method untuk menampilkan keranjang, memperbarui periode sewa, menghapus kendaraan, dan memproses checkout.
+
+

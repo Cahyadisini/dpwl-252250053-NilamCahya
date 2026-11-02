@@ -49,7 +49,7 @@ rc.0/dist/css/select2.min.css">
  
   .select2-container--default .select2-selection--single .select2-selection__arrow { 
     height: 36px; 
- right: .35rem; 
+     right: .35rem; 
   } 
  
   .select2-dropdown { 
@@ -118,8 +118,8 @@ periode-sewa">
               <label for="tgl_selesai" class="form-label">Tanggal selesai</label> 
               <input type="date" class="form-control" id="tgl_selesai" name="tgl_selesai" 
                 min="<?= $e($minTanggalSelesai) ?>" 
-                value="<?= $e($keranjang['tgl_selesai'] ?? $minTanggalSelesai) ?>" required> 
-</div> 
+                value="<?= $e($keranjang['tgl_selesai'] ?? $minTanggalSelesai) ?>" required>
+                 </div> 
             <div class="col-md-4"> 
               <label for="wkt_ambil" class="form-label">Waktu pengambilan</label> 
               <?php $waktuTersimpan = substr((string) ($keranjang['wkt_ambil'] ?? $minimumMulai
@@ -259,7 +259,7 @@ sampai transaksi disetujui admin.
       batas.setSeconds(0, 0); 
  
       const tanggalBatas = formatTanggal(batas);
-       tanggalMulai.min = tanggalBatas; 
+        tanggalMulai.min = tanggalBatas; 
       if (!tanggalMulai.value || tanggalMulai.value < tanggalBatas) { 
         tanggalMulai.value = tanggalBatas; 
       } 
@@ -327,7 +327,7 @@ sampai transaksi disetujui admin.
         alert('Tanggal selesai harus setelah tanggal mulai.'); 
         tanggalSelesai.focus(); 
         return; 
-      }
+      } 
        if (!waktuAmbil.value) { 
         event.preventDefault(); 
         alert('Pilih waktu pengambilan yang valid.'); 
@@ -384,4 +384,4 @@ sampai transaksi disetujui admin.
   }); 
 </script> 
  
-<?php require APPPATH . 'views/katalog/footer.php'; ?> 
+<?php require APPPATH . 'views/katalog/footer.php'; ?>
