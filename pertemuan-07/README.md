@@ -51,3 +51,17 @@ Tombol disesuaikan berdasarkan status kendaraan dan status login penyewa.
 ### Perubahan
 Mengubah blok tombol Tambah ke Keranjang pada `application/views/katalog/index.php`.
 Tombol disesuaikan dengan status kendaraan dan status login penyewa.
+
+## Tahap D.1 — Menyesuaikan Navbar
+
+### Perubahan
+Mengubah `application/views/katalog/navbar.php`.
+Perubahan meliputi penambahan notifikasi transaksi, tautan menuju halaman keranjang, dan tampilan jumlah kendaraan dalam keranjang.
+
+## Tahap D.2 — Mengirim Jumlah Keranjang ke Halaman
+
+### Perubahan File
+1. `application/models/Transaksi_model.php`
+2. `application/controllers/Katalog_controller.php`
+
+Menambahkan method untuk menghitung jumlah kendaraan dalam keranjang dan mengirimkan hasilnya ke halaman katalog serta detail kendaraan melalui data `jumlahKeranjang`.
