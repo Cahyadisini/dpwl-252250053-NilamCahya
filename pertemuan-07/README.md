@@ -113,3 +113,10 @@ Menambahkan method untuk menampilkan keranjang, memperbarui periode sewa, mengha
 Membuat file `application/views/transaksi/konfirmasi.php`.
 Halaman ini menampilkan ringkasan transaksi, total sewa, DP sebesar 30%, dan sisa pembayaran sebelum transaksi diajukan kepada admin.
 
+## Menguji Proses Checkout 
+
+Pada tahap P7, fitur checkout digunakan untuk mengajukan transaksi kepada admin. Setelah penyewa melakukan checkout, status transaksi berubah menjadi `diajukan` dan menunggu proses pemeriksaan oleh admin.
+
+Checkout belum berarti penyewa sudah melakukan pembayaran atau transaksi telah disetujui oleh admin. Pengunggahan bukti pembayaran dan proses verifikasi pembayaran akan dibahas pada P9.
+
+Dengan demikian, fitur checkout pada P7 hanya berfungsi sebagai proses pengajuan transaksi, bukan sebagai konfirmasi pembayaran.
