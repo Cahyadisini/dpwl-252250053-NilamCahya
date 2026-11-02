@@ -46,3 +46,8 @@ Route tersebut menghubungkan URL transaksi/tambah dengan method tambah() pada Tr
 Mengubah bagian formulir Add To Cart pada `application/views/katalog/detail.php`.
 Tombol disesuaikan berdasarkan status kendaraan dan status login penyewa.
 
+## Tahap C.2 — Integrasi Tombol pada Halaman Katalog
+
+### Perubahan
+Mengubah blok tombol Tambah ke Keranjang pada `application/views/katalog/index.php`.
+Tombol disesuaikan dengan status kendaraan dan status login penyewa.
