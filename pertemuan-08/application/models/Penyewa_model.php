@@ -1,3 +1,4 @@
+
 <?php
 
 class Penyewa_model
@@ -10,11 +11,36 @@ class Penyewa_model
     $this->db = $db;
   }
 
+  // P8: mengambil seluruh data penyewa untuk Admin.
+  public function getAll(): array
+  {
+    $sql = "SELECT
+              user_plg,
+              nik,
+              nm_lngkp,
+              no_hp,
+              almt_lngkp,
+              ft_ktp,
+              ft_sim_a
+            FROM t_penyewa
+            ORDER BY nm_lngkp ASC";
+
+    $result = $this->db->query($sql);
+
+    if (!$result) {
+      throw new RuntimeException(
+        'Pengambilan data penyewa gagal.'
+      );
+    }
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+  }
+
   public function findByUserPlg(string $userPlg): ?array
   {
-    $sql = "SELECT user_plg 
-            FROM t_penyewa 
-            WHERE user_plg = ? 
+    $sql = "SELECT user_plg
+            FROM t_penyewa
+            WHERE user_plg = ?
             LIMIT 1";
 
     $stmt = $this->db->prepare($sql);
@@ -43,18 +69,22 @@ class Penyewa_model
     return $row ?: null;
   }
 
+  // P6: registrasi dan P8: tambah data penyewa.
   public function create(array $data): bool
   {
-    $sql = "INSERT INTO t_penyewa ( 
-              user_plg, 
-              sandi, 
-              nik, 
-              nm_lngkp, 
-              no_hp, 
-              almt_lngkp, 
-              ft_ktp, 
-              ft_sim_a 
-            ) VALUES (?, ?, ?, ?, ?, ?, NULL, NULL)";
+    $ftKtp = $data['ft_ktp'] ?? null;
+    $ftSimA = $data['ft_sim_a'] ?? null;
+
+    $sql = "INSERT INTO t_penyewa (
+              user_plg,
+              sandi,
+              nik,
+              nm_lngkp,
+              no_hp,
+              almt_lngkp,
+              ft_ktp,
+              ft_sim_a
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $this->db->prepare($sql);
 
@@ -65,13 +95,15 @@ class Penyewa_model
     }
 
     $stmt->bind_param(
-      'ssssss',
+      'ssssssss',
       $data['user_plg'],
       $data['sandi'],
       $data['nik'],
       $data['nm_lngkp'],
       $data['no_hp'],
-      $data['almt_lngkp']
+      $data['almt_lngkp'],
+      $ftKtp,
+      $ftSimA
     );
 
     $success = $stmt->execute();
@@ -81,12 +113,12 @@ class Penyewa_model
     return $success;
   }
 
-  // P6: untuk login penyewa 
+  // P6: untuk login penyewa.
   public function findForLogin(string $userPlg): ?array
   {
-    $sql = "SELECT user_plg, sandi, nm_lngkp 
-            FROM t_penyewa 
-            WHERE user_plg = ? 
+    $sql = "SELECT user_plg, sandi, nm_lngkp
+            FROM t_penyewa
+            WHERE user_plg = ?
             LIMIT 1";
 
     $stmt = $this->db->prepare($sql);
@@ -115,19 +147,19 @@ class Penyewa_model
     return $row ?: null;
   }
 
-  // P6: mengambil profil penyewa. 
+  // P6: mengambil profil penyewa.
   public function getProfil(string $userPlg): ?array
   {
-    $sql = "SELECT 
-              user_plg, 
-              nik, 
-              nm_lngkp, 
-              no_hp, 
-              almt_lngkp, 
-              ft_ktp, 
-              ft_sim_a 
-            FROM t_penyewa 
-            WHERE user_plg = ? 
+    $sql = "SELECT
+              user_plg,
+              nik,
+              nm_lngkp,
+              no_hp,
+              almt_lngkp,
+              ft_ktp,
+              ft_sim_a
+            FROM t_penyewa
+            WHERE user_plg = ?
             LIMIT 1";
 
     $stmt = $this->db->prepare($sql);
@@ -156,15 +188,15 @@ class Penyewa_model
     return $row ?: null;
   }
 
-  // P6: verifikasi password 
+  // P6: verifikasi password.
   public function verifikasiPassword(
     string $userPlg,
     string $passwordSaatIni
   ): bool {
-    $sql = "SELECT sandi 
-          FROM t_penyewa 
-          WHERE user_plg = ? 
-          LIMIT 1";
+    $sql = "SELECT sandi
+            FROM t_penyewa
+            WHERE user_plg = ?
+            LIMIT 1";
 
     $stmt = $this->db->prepare($sql);
 
@@ -192,7 +224,8 @@ class Penyewa_model
     return $row !== null
       && password_verify($passwordSaatIni, $row['sandi']);
   }
-  // P6: memperbarui data profil dan referensi foto. 
+
+  // P6: memperbarui data profil dan referensi foto.
   public function updateProfil(
     string $userPlg,
     string $nik,
@@ -204,15 +237,15 @@ class Penyewa_model
     ?string $passwordHash = null
   ): bool {
     if ($passwordHash !== null) {
-      $sql = "UPDATE t_penyewa 
-          SET nik = ?, 
-              nm_lngkp = ?, 
-              no_hp = ?, 
-              almt_lngkp = ?, 
-              ft_ktp = ?, 
-              ft_sim_a = ?, 
-              sandi = ? 
-          WHERE user_plg = ?";
+      $sql = "UPDATE t_penyewa
+              SET nik = ?,
+                  nm_lngkp = ?,
+                  no_hp = ?,
+                  almt_lngkp = ?,
+                  ft_ktp = ?,
+                  ft_sim_a = ?,
+                  sandi = ?
+              WHERE user_plg = ?";
 
       $stmt = $this->db->prepare($sql);
 
@@ -234,14 +267,14 @@ class Penyewa_model
         $userPlg
       );
     } else {
-      $sql = "UPDATE t_penyewa 
-          SET nik = ?, 
-              nm_lngkp = ?, 
-              no_hp = ?, 
-              almt_lngkp = ?, 
-              ft_ktp = ?, 
-              ft_sim_a = ? 
-          WHERE user_plg = ?";
+      $sql = "UPDATE t_penyewa
+              SET nik = ?,
+                  nm_lngkp = ?,
+                  no_hp = ?,
+                  almt_lngkp = ?,
+                  ft_ktp = ?,
+                  ft_sim_a = ?
+              WHERE user_plg = ?";
 
       $stmt = $this->db->prepare($sql);
 
@@ -264,6 +297,98 @@ class Penyewa_model
     }
 
     $success = $stmt->execute();
+    $stmt->close();
+
+    return $success;
+  }
+
+  // P8: mengubah data penyewa oleh Admin.
+  public function update(string $userPlg, array $data): bool
+  {
+    if (!empty($data['sandi'])) {
+      $sql = "UPDATE t_penyewa
+              SET sandi = ?,
+                  nik = ?,
+                  nm_lngkp = ?,
+                  no_hp = ?,
+                  almt_lngkp = ?,
+                  ft_ktp = ?,
+                  ft_sim_a = ?
+              WHERE user_plg = ?";
+
+      $stmt = $this->db->prepare($sql);
+
+      if (!$stmt) {
+        throw new RuntimeException(
+          'Query update penyewa gagal disiapkan.'
+        );
+      }
+
+      $stmt->bind_param(
+        'ssssssss',
+        $data['sandi'],
+        $data['nik'],
+        $data['nm_lngkp'],
+        $data['no_hp'],
+        $data['almt_lngkp'],
+        $data['ft_ktp'],
+        $data['ft_sim_a'],
+        $userPlg
+      );
+    } else {
+      $sql = "UPDATE t_penyewa
+              SET nik = ?,
+                  nm_lngkp = ?,
+                  no_hp = ?,
+                  almt_lngkp = ?,
+                  ft_ktp = ?,
+                  ft_sim_a = ?
+              WHERE user_plg = ?";
+
+      $stmt = $this->db->prepare($sql);
+
+      if (!$stmt) {
+        throw new RuntimeException(
+          'Query update penyewa gagal disiapkan.'
+        );
+      }
+
+      $stmt->bind_param(
+        'sssssss',
+        $data['nik'],
+        $data['nm_lngkp'],
+        $data['no_hp'],
+        $data['almt_lngkp'],
+        $data['ft_ktp'],
+        $data['ft_sim_a'],
+        $userPlg
+      );
+    }
+
+    $success = $stmt->execute();
+    $stmt->close();
+
+    return $success;
+  }
+
+  // P8: menghapus data penyewa oleh Admin.
+  public function delete(string $userPlg): bool
+  {
+    $sql = "DELETE FROM t_penyewa
+            WHERE user_plg = ?";
+
+    $stmt = $this->db->prepare($sql);
+
+    if (!$stmt) {
+      throw new RuntimeException(
+        'Query hapus penyewa gagal disiapkan.'
+      );
+    }
+
+    $stmt->bind_param('s', $userPlg);
+
+    $success = $stmt->execute();
+
     $stmt->close();
 
     return $success;
