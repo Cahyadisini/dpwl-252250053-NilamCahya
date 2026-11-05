@@ -7,12 +7,169 @@ class Penyewa_controller extends Controller
   private Penyewa_model $model;
   private Transaksi_model $transaksiModel;  
  
-  public function __construct() 
-  { 
+  public function __construct()
+{
+    require_once APPPATH . 'helpers/auth_helper.php';
+    require_once APPPATH . 'helpers/flash_helper.php';
+
     $this->model = new Penyewa_model();
-    $this->transaksiModel = new Transaksi_model();  
-  } 
- 
+    $this->transaksiModel = new Transaksi_model();
+}
+ public function index(): void
+{
+    require_admin_login();
+
+    try {
+        $this->view('admin/penyewa_view', [
+            'username' => $_SESSION['admin_username'] ?? '',
+            'penyewa' => $this->model->getAll(),
+            'flash' => get_flash_message(),
+            'mode' => null,
+            'penyewa_dipilih' => null,
+            'error' => null
+        ]);
+    } catch (Throwable $e) {
+        error_log('Halaman manajemen penyewa gagal: ' . $e->getMessage());
+
+        http_response_code(500);
+        exit('Halaman Manajemen Penyewa belum dapat ditampilkan.');
+    }
+}
+public function tambah(): void
+{
+    require_admin_login();
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        $this->renderManajemenPenyewa('tambah');
+        return;
+    }
+
+    $data = [
+        'user_plg' => trim($_POST['user_plg'] ?? ''),
+        'sandi' => $_POST['sandi'] ?? '',
+        'nik' => trim($_POST['nik'] ?? ''),
+        'nm_lngkp' => trim($_POST['nm_lngkp'] ?? ''),
+        'no_hp' => trim($_POST['no_hp'] ?? ''),
+        'almt_lngkp' => trim($_POST['almt_lngkp'] ?? ''),
+        'ft_ktp' => null,
+        'ft_sim_a' => null
+    ];
+
+    try {
+        $error = $this->validatePenyewaInput($data, true);
+
+        if ($error !== null) {
+            $this->renderManajemenPenyewa('tambah', null, $error);
+            return;
+        }
+
+        if ($this->model->findByUserPlg($data['user_plg'])) {
+            $this->renderManajemenPenyewa(
+                'tambah',
+                null,
+                'Username penyewa sudah digunakan.'
+            );
+            return;
+        }
+
+        $data['ft_ktp'] = $this->uploadFotoPenyewa('ft_ktp');
+        $data['ft_sim_a'] = $this->uploadFotoPenyewa('ft_sim_a');
+
+        $data['sandi'] = password_hash($data['sandi'], PASSWORD_DEFAULT);
+
+        if (!$this->model->create($data)) {
+            $this->hapusFotoPenyewa($data['ft_ktp'], 'ft_ktp');
+            $this->hapusFotoPenyewa($data['ft_sim_a'], 'ft_sim_a');
+
+            $this->renderManajemenPenyewa(
+                'tambah',
+                null,
+                'Data penyewa gagal disimpan.'
+            );
+            return;
+        }
+
+        set_flash_message('success', 'Data penyewa berhasil ditambahkan.');
+        header('Location: ' . BASEURL . '/admin/penyewa');
+        exit;
+    } catch (Throwable $e) {
+        error_log('Tambah penyewa gagal: ' . $e->getMessage());
+
+        $this->renderManajemenPenyewa(
+            'tambah',
+            null,
+            'Terjadi kesalahan saat menambahkan data penyewa.'
+        );
+    }
+}
+private function validatePenyewaInput(array $data, bool $isCreate): ?string
+{
+    if (
+        $data['user_plg'] === '' ||
+        strlen($data['user_plg']) > 50 ||
+        preg_match('/[\x00-\x1F\x7F]/', $data['user_plg'])
+    ) {
+        return 'Username wajib diisi dan maksimal 50 karakter.';
+    }
+
+    if ($isCreate && $data['sandi'] === '') {
+        return 'Password wajib diisi.';
+    }
+
+    if ($data['sandi'] !== '') {
+        if (strlen($data['sandi']) < 8 || strlen($data['sandi']) > 72) {
+            return 'Password harus terdiri dari 8 sampai 72 karakter.';
+        }
+    }
+
+    if (!preg_match('/\A[0-9]{16}\z/', $data['nik'])) {
+        return 'NIK wajib terdiri dari tepat 16 digit angka.';
+    }
+
+    if (
+        $data['nm_lngkp'] === '' ||
+        mb_strlen($data['nm_lngkp']) > 100 ||
+        !preg_match(
+            "/\A[\p{L}\p{M}]+(?:[ .'-][\p{L}\p{M}]+)*\z/u",
+            $data['nm_lngkp']
+        )
+    ) {
+        return 'Nama lengkap wajib diisi dan maksimal 100 karakter.';
+    }
+
+    if (
+        $data['no_hp'] === '' ||
+        strlen($data['no_hp']) > 15 ||
+        !preg_match('/\A[0-9+(). -]+\z/', $data['no_hp']) ||
+        !preg_match('/[0-9]/', $data['no_hp'])
+    ) {
+        return 'Nomor HP tidak valid atau melebihi 15 karakter.';
+    }
+
+    if (
+        $data['almt_lngkp'] === '' ||
+        mb_strlen($data['almt_lngkp']) > 300 ||
+        preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', $data['almt_lngkp'])
+    ) {
+        return 'Alamat wajib diisi dan maksimal 300 karakter.';
+    }
+
+    return null;
+}
+private function renderManajemenPenyewa(
+    string $mode,
+    ?array $penyewaDipilih = null,
+    ?string $error = null
+): void {
+    $this->view('admin/penyewa_view', [
+        'username' => $_SESSION['admin_username'] ?? '',
+        'penyewa' => $this->model->getAll(),
+        'flash' => null,
+        'mode' => $mode,
+        'penyewa_dipilih' => $penyewaDipilih,
+        'error' => $error
+    ]);
+}
   public function profil(): void 
   { 
     if (empty($_SESSION['penyewa_user_plg'])) { 

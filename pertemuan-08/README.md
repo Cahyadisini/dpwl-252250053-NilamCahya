@@ -16,3 +16,24 @@ Menambahkan menu Manajemen Penyewa pada sidebar Admin agar Admin dapat mengakses
 
 **Hasil Pengujian:**
 Belum dilakukan pengujian CRUD. Pengujian akan dilakukan setelah Controller dan View selesai dibuat.
+
+### Tahap c — Formulir dan Tampilan Data Penyewa
+
+**File yang dibuat:**
+- `application/views/admin/penyewa_view.php`
+
+**File yang diubah:**
+- `config/routes.php`
+- `application/controllers/Penyewa_controller.php`
+
+**Perubahan:**
+- Membuat halaman Manajemen Penyewa dengan formulir dan tabel data penyewa.
+- Menambahkan route untuk halaman Manajemen Penyewa, tambah, ubah, dan hapus.
+- Menambahkan fungsi `index()` untuk menampilkan halaman Manajemen Penyewa.
+- Menambahkan fungsi `tambah()` untuk memproses penambahan data penyewa.
+- Menambahkan validasi input dan fungsi untuk menampilkan kembali halaman ketika terjadi kesalahan.
+- Mempertahankan fungsi profil penyewa dan jumlah kendaraan dalam keranjang yang sudah ada.
+
+**Hasil Pemeriksaan:**
+- File `penyewa_view.php`: tidak terdapat kesalahan sintaks.
+- File `Penyewa_controller.php`: tidak terdapat kesalahan sintaks.
