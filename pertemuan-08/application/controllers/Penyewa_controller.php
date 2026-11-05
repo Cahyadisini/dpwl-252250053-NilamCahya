@@ -55,6 +55,8 @@ public function tambah(): void
         'ft_sim_a' => null
     ];
 
+    $uploadedFiles = [];
+
     try {
         $error = $this->validatePenyewaInput($data, true);
 
@@ -72,14 +74,57 @@ public function tambah(): void
             return;
         }
 
-        $data['ft_ktp'] = $this->uploadFotoPenyewa('ft_ktp');
-        $data['ft_sim_a'] = $this->uploadFotoPenyewa('ft_sim_a');
+        // Upload foto KTP.
+        $uploadKtp = $this->uploadFotoPenyewa('ft_ktp');
 
-        $data['sandi'] = password_hash($data['sandi'], PASSWORD_DEFAULT);
+        if (!$uploadKtp['success']) {
+            $this->renderManajemenPenyewa(
+                'tambah',
+                null,
+                $uploadKtp['error']
+            );
+            return;
+        }
 
+        $data['ft_ktp'] = $uploadKtp['filename'];
+
+        if ($data['ft_ktp'] !== null) {
+            $uploadedFiles[] = $data['ft_ktp'];
+        }
+
+        // Upload foto SIM A.
+        $uploadSim = $this->uploadFotoPenyewa('ft_sim_a');
+
+        if (!$uploadSim['success']) {
+            $this->hapusFotoPenyewa($uploadedFiles);
+
+            $this->renderManajemenPenyewa(
+                'tambah',
+                null,
+                $uploadSim['error']
+            );
+            return;
+        }
+
+        $data['ft_sim_a'] = $uploadSim['filename'];
+
+        if ($data['ft_sim_a'] !== null) {
+            $uploadedFiles[] = $data['ft_sim_a'];
+        }
+
+        // Hash password sebelum disimpan.
+        $data['sandi'] = password_hash(
+            $data['sandi'],
+            PASSWORD_DEFAULT
+        );
+
+        if ($data['sandi'] === false) {
+            throw new RuntimeException('Hash password gagal dibuat.');
+        }
+
+        // Simpan data penyewa.
         if (!$this->model->create($data)) {
-            $this->hapusFotoPenyewa($data['ft_ktp'], 'ft_ktp');
-            $this->hapusFotoPenyewa($data['ft_sim_a'], 'ft_sim_a');
+            $this->hapusFotoPenyewa($uploadedFiles);
 
             $this->renderManajemenPenyewa(
                 'tambah',
@@ -89,11 +134,17 @@ public function tambah(): void
             return;
         }
 
-        set_flash_message('success', 'Data penyewa berhasil ditambahkan.');
-        header('Location: ' . BASEURL . '/admin/penyewa');
+        set_flash_message(
+            'success',
+            'Data penyewa berhasil ditambahkan.'
+        );
+
+        header('Location: ' . site_url('admin/penyewa'));
         exit;
     } catch (Throwable $e) {
         error_log('Tambah penyewa gagal: ' . $e->getMessage());
+
+        $this->hapusFotoPenyewa($uploadedFiles);
 
         $this->renderManajemenPenyewa(
             'tambah',
@@ -169,7 +220,197 @@ private function renderManajemenPenyewa(
         'penyewa_dipilih' => $penyewaDipilih,
         'error' => $error
     ]);
+}   
+public function ubah(string $userPlg): void
+{
+    require_admin_login();
+
+    $userPlg = trim($userPlg);
+
+    try {
+        $penyewa = $this->model->getProfil($userPlg);
+
+        if ($penyewa === null) {
+            set_flash_message('error', 'Data penyewa tidak ditemukan.');
+            header('Location: ' . site_url('admin/penyewa'));
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->renderManajemenPenyewa('ubah', $penyewa);
+            return;
+        }
+
+        $data = [
+            'user_plg' => $userPlg,
+            'sandi' => (string) ($_POST['sandi'] ?? ''),
+            'nik' => trim($_POST['nik'] ?? ''),
+            'nm_lngkp' => trim($_POST['nm_lngkp'] ?? ''),
+            'no_hp' => trim($_POST['no_hp'] ?? ''),
+            'almt_lngkp' => trim($_POST['almt_lngkp'] ?? ''),
+            'ft_ktp' => $penyewa['ft_ktp'],
+            'ft_sim_a' => $penyewa['ft_sim_a']
+        ];
+
+        $error = $this->validatePenyewaInput($data, false);
+
+        if ($error !== null) {
+            $this->renderManajemenPenyewa(
+                'ubah',
+                array_merge($penyewa, $data),
+                $error
+            );
+            return;
+        }
+
+        $uploadedFiles = [];
+
+        // Upload foto KTP baru jika dipilih.
+        $uploadKtp = $this->uploadFotoPenyewa('ft_ktp');
+
+        if (!$uploadKtp['success']) {
+            $this->renderManajemenPenyewa(
+                'ubah',
+                array_merge($penyewa, $data),
+                $uploadKtp['error']
+            );
+            return;
+        }
+
+        if ($uploadKtp['filename'] !== null) {
+            $uploadedFiles[] = $uploadKtp['filename'];
+            $data['ft_ktp'] = $uploadKtp['filename'];
+        }
+
+        // Upload foto SIM A baru jika dipilih.
+        $uploadSim = $this->uploadFotoPenyewa('ft_sim_a');
+
+        if (!$uploadSim['success']) {
+            $this->hapusFotoPenyewa($uploadedFiles);
+
+            $this->renderManajemenPenyewa(
+                'ubah',
+                array_merge($penyewa, $data),
+                $uploadSim['error']
+            );
+            return;
+        }
+
+        if ($uploadSim['filename'] !== null) {
+            $uploadedFiles[] = $uploadSim['filename'];
+            $data['ft_sim_a'] = $uploadSim['filename'];
+        }
+
+        // Password hanya diubah jika kolom diisi.
+        if ($data['sandi'] !== '') {
+            $data['sandi'] = password_hash(
+                $data['sandi'],
+                PASSWORD_DEFAULT
+            );
+
+            if ($data['sandi'] === false) {
+                throw new RuntimeException('Hash password gagal dibuat.');
+            }
+        }
+
+        if (!$this->model->update($userPlg, $data)) {
+            $this->hapusFotoPenyewa($uploadedFiles);
+
+            $this->renderManajemenPenyewa(
+                'ubah',
+                array_merge($penyewa, $data),
+                'Data penyewa gagal diperbarui.'
+            );
+            return;
+        }
+
+        // Hapus foto lama setelah update database berhasil.
+        $fotoLama = [];
+
+        if ($uploadKtp['filename'] !== null && !empty($penyewa['ft_ktp'])) {
+            $fotoLama[] = ['ft_ktp', $penyewa['ft_ktp']];
+        }
+
+        if ($uploadSim['filename'] !== null && !empty($penyewa['ft_sim_a'])) {
+            $fotoLama[] = ['ft_sim_a', $penyewa['ft_sim_a']];
+        }
+
+        $this->hapusFotoPenyewa($fotoLama);
+
+        set_flash_message('success', 'Data penyewa berhasil diperbarui.');
+        header('Location: ' . site_url('admin/penyewa'));
+        exit;
+
+    } catch (Throwable $e) {
+        error_log('Ubah penyewa gagal: ' . $e->getMessage());
+
+        if (!empty($uploadedFiles)) {
+            $this->hapusFotoPenyewa($uploadedFiles);
+        }
+
+        $this->renderManajemenPenyewa(
+            'ubah',
+            $penyewa ?? null,
+            'Terjadi kesalahan saat mengubah data penyewa.'
+        );
+    }
 }
+
+public function hapus(string $userPlg): void
+{
+    require_admin_login();
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        header('Allow: POST');
+        exit('Method Not Allowed');
+    }
+
+    $userPlg = trim($userPlg);
+
+    try {
+        $penyewa = $this->model->getProfil($userPlg);
+
+        if ($penyewa === null) {
+            set_flash_message('error', 'Data penyewa tidak ditemukan.');
+            header('Location: ' . site_url('admin/penyewa'));
+            exit;
+        }
+
+        if (!$this->model->delete($userPlg)) {
+            set_flash_message('error', 'Data penyewa gagal dihapus.');
+            header('Location: ' . site_url('admin/penyewa'));
+            exit;
+        }
+
+        // Hapus foto setelah data berhasil dihapus dari database.
+        $fotoLama = [];
+
+        if (!empty($penyewa['ft_ktp'])) {
+            $fotoLama[] = ['ft_ktp', $penyewa['ft_ktp']];
+        }
+
+        if (!empty($penyewa['ft_sim_a'])) {
+            $fotoLama[] = ['ft_sim_a', $penyewa['ft_sim_a']];
+        }
+
+        $this->hapusFotoPenyewa($fotoLama);
+
+        set_flash_message('success', 'Data penyewa berhasil dihapus.');
+
+    } catch (Throwable $e) {
+        error_log('Hapus penyewa gagal: ' . $e->getMessage());
+
+        set_flash_message(
+            'error',
+            'Terjadi kesalahan saat menghapus data penyewa.'
+        );
+    }
+
+    header('Location: ' . site_url('admin/penyewa'));
+    exit;
+}
+
   public function profil(): void 
   { 
     if (empty($_SESSION['penyewa_user_plg'])) { 

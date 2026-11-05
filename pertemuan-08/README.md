@@ -38,3 +38,26 @@ Belum dilakukan pengujian CRUD. Pengujian akan dilakukan setelah Controller dan 
 - Halaman Manajemen Penyewa berhasil dibuka melalui browser.
 - Formulir Manajemen Penyewa berhasil ditampilkan.
 - Tabel data penyewa berhasil ditampilkan dan data dari database muncul.
+### Tahap d — CRUD Manajemen Data Penyewa
+
+**File yang diubah:**
+- `application/controllers/Penyewa_controller.php`
+- `application/models/Penyewa_model.php`
+- `application/views/admin/penyewa_view.php`
+
+**Perubahan:**
+- Menambahkan fungsi untuk menampilkan, menambah, mengubah, dan menghapus data penyewa.
+- Menggunakan prepared statement MySQLi untuk proses database.
+- Menerapkan validasi data sebelum disimpan.
+- Menggunakan `password_hash()` untuk mengenkripsi password.
+- Menambahkan fitur upload dan penghapusan foto KTP serta SIM A.
+- Menambahkan hak akses agar halaman manajemen penyewa hanya dapat diakses oleh Admin.
+- Menggunakan redirect setelah proses CRUD selesai.
+
+**Hasil Pengujian:**
+- Halaman Manajemen Penyewa berhasil ditampilkan.
+- Data penyewa berhasil ditambahkan.
+- Data penyewa berhasil ditampilkan pada tabel.
+- Data penyewa berhasil diubah.
+- Data penyewa berhasil dihapus.
+- Proses CRUD berjalan sesuai fungsinya.
