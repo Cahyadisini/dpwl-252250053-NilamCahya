@@ -35,5 +35,6 @@ Belum dilakukan pengujian CRUD. Pengujian akan dilakukan setelah Controller dan 
 - Mempertahankan fungsi profil penyewa dan jumlah kendaraan dalam keranjang yang sudah ada.
 
 **Hasil Pemeriksaan:**
-- File `penyewa_view.php`: tidak terdapat kesalahan sintaks.
-- File `Penyewa_controller.php`: tidak terdapat kesalahan sintaks.
+- Halaman Manajemen Penyewa berhasil dibuka melalui browser.
+- Formulir Manajemen Penyewa berhasil ditampilkan.
+- Tabel data penyewa berhasil ditampilkan dan data dari database muncul.
