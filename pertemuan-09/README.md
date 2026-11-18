@@ -52,5 +52,4 @@ Membuat fitur bagi admin untuk memeriksa bukti pembayaran DP yang telah diunggah
 - `config/routes.php`
 
 ### Hasil Akhir
-
 Fitur Verifikasi Pembayaran Admin berhasil ditambahkan. Admin dapat melihat daftar pembayaran DP, memeriksa bukti pembayaran, serta memberikan keputusan persetujuan atau penolakan terhadap pembayaran penyewa.
