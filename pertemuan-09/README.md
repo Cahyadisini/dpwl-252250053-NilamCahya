@@ -53,3 +53,36 @@ Membuat fitur bagi admin untuk memeriksa bukti pembayaran DP yang telah diunggah
 
 ### Hasil Akhir
 Fitur Verifikasi Pembayaran Admin berhasil ditambahkan. Admin dapat melihat daftar pembayaran DP, memeriksa bukti pembayaran, serta memberikan keputusan persetujuan atau penolakan terhadap pembayaran penyewa.
+
+## P9 — Menguji dan Memperbaiki Proses Pembayaran
+
+### Tujuan
+Memastikan seluruh proses pembayaran berjalan dengan baik, mulai dari penyewa melihat tagihan, mengunggah bukti pembayaran, hingga admin melakukan verifikasi.
+
+### Pengujian
+
+1. **Pengujian dari Sisi Penyewa**
+   - Memastikan daftar pembayaran dapat ditampilkan.
+   - Memastikan detail pembayaran dapat dibuka.
+   - Menguji unggah bukti pembayaran.
+   - Memastikan format file dan ukuran file divalidasi.
+   - Memastikan notifikasi berhasil atau gagal tampil.
+
+2. **Pengujian dari Sisi Admin**
+   - Memastikan daftar pembayaran pending ditampilkan.
+   - Memastikan detail dan bukti pembayaran dapat dilihat.
+   - Menguji proses persetujuan pembayaran.
+   - Menguji proses penolakan pembayaran.
+
+3. **Pengujian Perubahan Status**
+   - Memastikan status pembayaran berubah menjadi `valid` atau `invalid`.
+   - Memastikan status transaksi berubah menjadi `disetujui` atau `ditolak`.
+   - Memastikan pembayaran yang sudah diverifikasi tidak dapat diproses kembali.
+
+### Perbaikan
+- Memperbaiki pemanggilan template AdminLTE pada halaman verifikasi pembayaran.
+- Menyesuaikan tampilan halaman daftar dan detail verifikasi agar menggunakan CSS dan sidebar admin.
+- Memperbaiki pemanggilan halaman detail pembayaran dan penanganan kode pembayaran pada URL.
+
+### Hasil Akhir
+Pengujian dan perbaikan dilakukan untuk memastikan proses pembayaran P9 berjalan sesuai alur yang ditentukan, mulai dari pengunggahan bukti pembayaran oleh penyewa hingga verifikasi pembayaran oleh admin.
