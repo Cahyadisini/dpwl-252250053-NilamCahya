@@ -60,6 +60,12 @@ search"></i>
         <span>Manajemen Penyewa</span>
     </a>
 </li>
+<li>
+    <a href="<?= site_url('admin/pembayaran') ?>">
+        <i class="fa fa-money"></i>
+        <span>Verifikasi Pembayaran</span>
+    </a>
+</li>
         </ul> 
         <!-- /.sidebar-menu --> 
       </section> 

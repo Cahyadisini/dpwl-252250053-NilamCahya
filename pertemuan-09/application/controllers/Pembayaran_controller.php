@@ -25,7 +25,7 @@ class Pembayaran_controller extends Controller
             $flash = $_SESSION['flash_pembayaran'] ?? null;
             unset($_SESSION['flash_pembayaran']);
 
-            $this->view('pembayaran/index', [
+            $this->view('penyewa/pembayaran', [
                 'pembayaran' => $pembayaran,
                 'flash' => $flash
             ]);
@@ -36,6 +36,36 @@ class Pembayaran_controller extends Controller
 
             http_response_code(500);
             exit('Data pembayaran belum dapat ditampilkan.');
+        }
+    }
+
+    // Halaman detail pembayaran milik penyewa.
+    public function detail(string $kodeBayar): void
+    {
+        $userPlg = $this->wajibLoginPenyewa();
+        $this->wajibMetode('GET');
+
+        $kodeBayar = str_replace('-', '/', $kodeBayar);
+
+        try {
+            $detail = $this->pembayaranModel
+                ->getPembayaranPenyewaByKode($kodeBayar, $userPlg);
+
+            if ($detail === null) {
+                http_response_code(404);
+                exit('Data pembayaran tidak ditemukan.');
+            }
+
+            $this->view('penyewa/pembayaran_detail', [
+                'detail' => $detail
+            ]);
+        } catch (Throwable $e) {
+            error_log(
+                'Detail pembayaran penyewa gagal: ' . $e->getMessage()
+            );
+
+            http_response_code(500);
+            exit('Detail pembayaran belum dapat ditampilkan.');
         }
     }
 
@@ -215,6 +245,7 @@ class Pembayaran_controller extends Controller
         }
     }
 
+    
     // Halaman daftar pembayaran yang perlu diverifikasi admin.
     public function verifikasi(): void
     {
@@ -230,10 +261,19 @@ class Pembayaran_controller extends Controller
             $flash = $_SESSION['flash_pembayaran'] ?? null;
             unset($_SESSION['flash_pembayaran']);
 
-            $this->view('admin/pembayaran/index', [
-                'pembayaran' => $pembayaran,
-                'flash' => $flash
-            ]);
+            $username = $_SESSION['admin_username'];
+
+            ob_start();
+
+            require APPPATH . 'views/templates/header.php';
+            require APPPATH . 'views/templates/sidebar.php';
+            require APPPATH . 'views/admin/verifikasi_pembayaran.php';
+            require APPPATH . 'views/templates/footer.php';
+
+            $html = ob_get_clean();
+
+            echo $html;
+
         } catch (Throwable $e) {
             error_log(
                 'Daftar verifikasi pembayaran gagal: ' . $e->getMessage()
@@ -241,6 +281,50 @@ class Pembayaran_controller extends Controller
 
             http_response_code(500);
             exit('Daftar pembayaran belum dapat ditampilkan.');
+        }
+    }
+
+
+    // Halaman detail verifikasi pembayaran admin.
+    public function detailVerifikasi(string $kodeBayar): void
+    {
+        require_once APPPATH . 'helpers/auth_helper.php';
+        require_admin_login();
+
+        $this->wajibMetode('GET');
+
+        $kodeBayar = str_replace('-', '/', $kodeBayar);
+
+        try {
+            $detail = $this->pembayaranModel
+                ->getDetailVerifikasi($kodeBayar);
+
+            if ($detail === null) {
+                http_response_code(404);
+                exit('Data pembayaran tidak ditemukan.');
+            }
+
+            $username = $_SESSION['admin_username'];
+
+            ob_start();
+
+            require APPPATH . 'views/templates/header.php';
+            require APPPATH . 'views/templates/sidebar.php';
+
+            require APPPATH . 'views/admin/verifikasi_pembayaran_detail.php';
+
+            require APPPATH . 'views/templates/footer.php';
+
+            $html = ob_get_clean();
+
+            echo $html;
+        } catch (Throwable $e) {
+            error_log(
+                'Detail verifikasi pembayaran gagal: ' . $e->getMessage()
+            );
+
+            http_response_code(500);
+            exit('Detail pembayaran belum dapat ditampilkan.');
         }
     }
 

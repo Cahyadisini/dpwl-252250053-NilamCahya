@@ -46,10 +46,13 @@ $route['admin/penyewa/tambah'] = 'Penyewa_controller/tambah';
 $route['admin/penyewa/ubah/(:any)'] = 'Penyewa_controller/ubah/$1';
 $route['admin/penyewa/hapus/(:any)'] = 'Penyewa_controller/hapus/$1';
 
-// Route P9 - Pembayaran Penyewa dan Verifikasi Admin
+// Route P9 
+// Pembayaran penyewa
 $route['pembayaran'] = 'Pembayaran_controller/index';
+$route['pembayaran/detail/(:any)'] = 'Pembayaran_controller/detail/$1';
 $route['pembayaran/unggah-bukti'] = 'Pembayaran_controller/unggahBukti';
 
-// Route P9 - Verifikasi Pembayaran oleh Admin
+// Verifikasi pembayaran admin
 $route['admin/pembayaran'] = 'Pembayaran_controller/verifikasi';
+$route['admin/pembayaran/detail/(:any)'] = 'Pembayaran_controller/detailVerifikasi/$1';
 $route['admin/pembayaran/proses'] = 'Pembayaran_controller/prosesVerifikasi';
