@@ -54,7 +54,7 @@ Membuat fitur bagi admin untuk memeriksa bukti pembayaran DP yang telah diunggah
 ### Hasil Akhir
 Fitur Verifikasi Pembayaran Admin berhasil ditambahkan. Admin dapat melihat daftar pembayaran DP, memeriksa bukti pembayaran, serta memberikan keputusan persetujuan atau penolakan terhadap pembayaran penyewa.
 
-## P9 — Menguji dan Memperbaiki Proses Pembayaran
+## Tahap 4 — Menguji dan Memperbaiki Proses Pembayaran
 
 ### Tujuan
 Memastikan seluruh proses pembayaran berjalan dengan baik, mulai dari penyewa melihat tagihan, mengunggah bukti pembayaran, hingga admin melakukan verifikasi.
