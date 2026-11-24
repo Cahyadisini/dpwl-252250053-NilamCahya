@@ -40,6 +40,11 @@ $route['transaksi/perbarui-periode'] = 'Transaksi_controller/perbaruiPeriode';
 $route['transaksi/hapus'] = 'Transaksi_controller/hapus';
 $route['transaksi/hapus/(:any)'] = 'Transaksi_controller/hapus/$1';
 $route['transaksi/checkout'] = 'Transaksi_controller/checkout';
+// Route Manajemen Penyewa P8
+$route['admin/penyewa'] = 'Penyewa_controller/index';
+$route['admin/penyewa/tambah'] = 'Penyewa_controller/tambah';
+$route['admin/penyewa/ubah/(:any)'] = 'Penyewa_controller/ubah/$1';
+$route['admin/penyewa/hapus/(:any)'] = 'Penyewa_controller/hapus/$1';
 
 // Route P9 - Pembayaran DP dan verifikasi admin.
 $route['pembayaran'] = 'Pembayaran_controller/index';
@@ -49,3 +54,9 @@ $route['pembayaran/upload/(:any)'] = 'Pembayaran_controller/uploadBukti/$1';
 $route['admin/pembayaran'] = 'Pembayaran_controller/verifikasiIndex';
 $route['admin/pembayaran/verifikasi/(:any)'] = 'Pembayaran_controller/verifikasiDetail/$1';
 $route['admin/pembayaran/proses/(:any)'] = 'Pembayaran_controller/prosesVerifikasi/$1';
+
+// Route P10
+$route['admin/pembayaran/pelunasan'] = 'Pembayaran_controller/pelunasanIndex';
+$route['admin/pembayaran/pelunasan/proses/(:any)'] = 'Pembayaran_controller/prosesPelunasan/$1';
+$route['admin/pembayaran/pelunasan/(:any)'] = 'Pembayaran_controller/pelunasanDetail/$1';
+$route['admin/pembayaran/dokumen/(:any)'] = 'Pembayaran_controller/dokumenTransaksi/$1';

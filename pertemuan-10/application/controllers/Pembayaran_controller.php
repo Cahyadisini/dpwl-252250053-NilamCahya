@@ -741,4 +741,47 @@ public function prosesPelunasan(string $kodeSewa = ''): void
         );
     }
 }
+/**
+ * P10: Menampilkan dokumen transaksi yang siap dicetak.
+ * Data disusun Model dari t_sewa, t_penyewa, t_pilih, t_mobil,
+ * dan t_bayar. Method ini hanya menyajikan data.
+ */
+public function dokumenTransaksi(string $kodeSewa = ''): void
+{
+    require_admin_login();
+
+    $this->wajibMetode('GET');
+
+    $kodeSewa = trim(str_replace('~', '/', $kodeSewa));
+
+    if ($kodeSewa === '') {
+        http_response_code(400);
+        exit('Kode transaksi sewa wajib tersedia.');
+    }
+
+    try {
+        $detailPelunasan = $this->pembayaranModel
+            ->getDetailPelunasan($kodeSewa);
+
+        if ($detailPelunasan === null) {
+            http_response_code(404);
+            exit('Data transaksi tidak ditemukan.');
+        }
+
+        $this->view('admin/dokumen_transaksi', [
+            'detailPelunasan' => $detailPelunasan
+        ]);
+    } catch (Throwable $e) {
+        error_log(
+            'Dokumen transaksi gagal ditampilkan: ' . $e->getMessage()
+        );
+
+        http_response_code(500);
+
+        exit(
+            'Dokumen transaksi belum dapat ditampilkan. '
+            . 'Silakan coba kembali.'
+        );
+    }
+}
 }
