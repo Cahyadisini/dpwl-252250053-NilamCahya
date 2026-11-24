@@ -29,3 +29,14 @@ dicetak
 - Memastikan seluruh method pelunasan dan dokumen transaksi dilindungi oleh require_admin_login().
 - Mempertahankan route pembayaran P9 yang sudah tersedia.
 - Melakukan pemeriksaan awal kesesuaian route dengan method Controller.
+- Membuat View 'pelunasan.php' untuk menampilkan daftar transaksi yang masih memiliki kewajiban pembayaran.
+- Membuat View 'pelunasan.detail.php'untuk menampilkan detail transaksi yang akan dilunasi.
+- Menguji halaman daftar pelunasan untuk memastikan transaksi yang masih memiliki kewajiban ditampilkan.
+- Memastikan tautan Detail / Proses membuka transaksi yang sesuai.
+- Memeriksa informasi transaksi, penyewa, kendaraan, dan riwayat pembayaran.
+- Memastikan formulir pelunasan menyediakan pilihan metode pembayaran tunai dan transfer.
+- Memastikan pilihan transfer menyediakan input unggah bukti transfer.
+- Memastikan formulir pelunasan dikirim menggunakan metode POST.
+- Memastikan transaksi yang sudah lunas tidak menampilkan formulir pelunasan kembali.
+- Menguji tampilan pesan keberhasilan dan kegagalan sesuai hasil pemrosesan Controller.
+- Memastikan data teks ditampilkan dengan aman menggunakan escaping.
