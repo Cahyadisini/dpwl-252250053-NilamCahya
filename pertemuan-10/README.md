@@ -21,4 +21,11 @@ dicetak
 - Memastikan penyewa tetap dapat melihat detail pembayaran dan mengunggah bukti pembayaran.
 - Memastikan admin tetap dapat melakukan verifikasi pembayaran.
 - Memastikan proses verifikasi dan perubahan status transaksi tetap berjalan sesuai fungsi sebelumnya.
-
+- Menambahkan route Method pelunasanIndex()
+- Menambahkan route Method prosesPelunasan(string $kodeSewa)
+- Menambahkan route Method pelunasanDetail(string $kodeSewa)
+- Menambahkan route Method dokumenTransaksi(string $kodeSewa)
+- Menambahkan menu Pelunasan pada bagian navigasi admin.
+- Memastikan seluruh method pelunasan dan dokumen transaksi dilindungi oleh require_admin_login().
+- Mempertahankan route pembayaran P9 yang sudah tersedia.
+- Melakukan pemeriksaan awal kesesuaian route dengan method Controller.
