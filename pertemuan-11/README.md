@@ -59,3 +59,17 @@ untuk membersihkan dokumen baru apabila proses serah terima gagal, sedangkan `ha
 digunakan untuk menghapus dokumen lama setelah dokumen penggantinya berhasil disimpan.
 Mekanisme ini membantu menjaga konsistensi berkas dokumen dan mencegah penghapusan berkas di luar
 cakupan unggahan P11.
+### D.6. Menerapkan Pola Post-Redirect-Get (PRG)
+Controller menerapkan pola Post-Redirect-Get (PRG) dengan menyimpan pesan sementara pada session dan
+mengarahkan admin ke halaman tujuan. Pesan ditampilkan satu kali setelah pengalihan.
+### D.7. Mencegah Pemrosesan Ulang Serah Terima
+Model menerapkan penguncian transaksi dan pemeriksaan status sebelum memproses serah terima.
+Transaksi yang sudah berubah menjadi aktif tidak dapat diproses kembali.
+### D.8 Implementasi Controller Serah Terima
+Controller `SerahTerima_controller.php` dibuat untuk menangani permintaan daftar transaksi, detail
+transaksi, dan konfirmasi serah terima kendaraan.
+Controller diintegrasikan dengan `SerahTerima_model` serta menerapkan pengendalian akses admin,
+pembatasan metode HTTP, validasi unggahan dokumen, dan pola Post-Redirect-Get (PRG).
+Pemeriksaan implementasi dilakukan dengan memastikan setiap method Controller menggunakan method
+Model yang sesuai. Pengujian fungsional melalui browser dilaksanakan setelah integrasi Route, View,
+dan Controller selesai.
