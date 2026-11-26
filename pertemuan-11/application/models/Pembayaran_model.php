@@ -985,7 +985,7 @@ public function getDaftarPelunasan(): array
         FROM t_sewa s
         INNER JOIN t_penyewa p
             ON p.user_plg = s.user_plg
-        WHERE s.status_sewa IN ('disetujui', 'lunas', 'aktif' )
+       WHERE s.status_sewa IN ('disetujui', 'lunas', 'aktif')
           AND EXISTS (
               SELECT 1
               FROM t_pilih tp

@@ -33,3 +33,29 @@ Proses serah terima memeriksa status transaksi, validitas pembayaran DP, kelengk
 SIM A, serta keberadaan kendaraan. Jika seluruh persyaratan terpenuhi, sistem mencatat waktu aktual
 pengambilan dan mengubah status transaksi menjadi `aktif`. Status kendaraan tetap `disewa`.
 Pengujian fungsional Model: dilanjutkan setelah integrasi Controller, route, dan View.
+## D. Implementasi Controller Daftar Serah Terima
+### D.1. Menangani Permintaan Daftar Transaksi Serah Terima
+Method `index()` dibuat untuk menangani permintaan daftar transaksi yang siap diserahterimakan.
+Controller mengambil data melalui `getDaftarSerahTerima()` pada Model dan meneruskannya kepada View.
+Akses dibatasi untuk admin dengan metode HTTP GET.
+### D.2. Menangani Permintaan Detail Transaksi Serah Terima
+Method `detail()` dibuat untuk menangani permintaan detail transaksi berdasarkan kode sewa. Data
+transaksi, penyewa, pembayaran, dan kendaraan diambil melalui `getDetailSerahTerima()` pada Model.
+### D.3. Menangani Proses Konfirmasi Serah Terima Kendaraan
+Method `proses()` dibuat untuk menangani konfirmasi serah terima menggunakan metode POST. Controller
+memproses unggahan dokumen, mencatat waktu aktual pengambilan, memanggil Model, serta menangani
+hasil proses dan pesan kepada admin.
+### D.4. Memvalidasi Status Transaksi, Pembayaran, dan Persyaratan Serah Terima
+Controller memanggil Model untuk memproses validasi status transaksi, pembayaran DP, dokumen KTP dan
+SIM A, serta keberadaan kendaraan. Jika persyaratan tidak terpenuhi, proses dibatalkan dan pesan
+kegagalan disampaikan kepada admin.
+### D.5. Menerapkan Validasi, Sanitasi, dan Pengendalian Akses
+Controller menerapkan pembatasan akses admin, pemeriksaan metode HTTP, serta validasi unggahan
+dokumen KTP dan SIM A. Dokumen yang diterima berupa JPEG, PNG, atau WEBP dengan ukuran maksimal 5
+MB.
+Controller menyediakan method `hapusSatuFile()` untuk membatasi penghapusan berkas hanya pada
+dokumen KTP dan SIM A yang dibuat oleh mekanisme unggah P11. Method `hapusFileBaru()` digunakan
+untuk membersihkan dokumen baru apabila proses serah terima gagal, sedangkan `hapusFileLama()`
+digunakan untuk menghapus dokumen lama setelah dokumen penggantinya berhasil disimpan.
+Mekanisme ini membantu menjaga konsistensi berkas dokumen dan mencegah penghapusan berkas di luar
+cakupan unggahan P11.
